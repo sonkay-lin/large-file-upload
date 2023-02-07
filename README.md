@@ -1,4 +1,7 @@
 # 大文件断点续传
+## 运行方式
+前端: cd 到 client `npm install` 然后 `npm run dev`
+后端: cd 到 server `npm install` 然后 `node server.js`
 ## 前端代码实现
 html的内容
 ```vue
