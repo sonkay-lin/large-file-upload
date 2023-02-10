@@ -24,6 +24,10 @@ app.use(
 );
 //上传路径
 const uploadDir = `${__dirname}/upload`;
+if (!fs.existsSync(uploadDir)) {
+  //路径不存在就创建文件夹
+  fs.mkdirSync(uploadDir);
+}
 // 基于multiparty插件实现文件上传处理 & form-data解析
 const multiparty_upload = (req) => {
   let config = {
