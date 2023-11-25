@@ -1,9 +1,7 @@
 <script setup>
-import upload from "@/components/upload.vue";
+import Upload from '@/components/upload.vue'
 </script>
 
 <template>
-  <upload />
+  <Upload></Upload>
 </template>
-
-<style scoped></style>

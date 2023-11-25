@@ -32,16 +32,37 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
 //响应拦截
 instance.interceptors.response.use(
   (response) => {
+    const { config: { url: reqUrl }, data: { code } } = response
+    if (reqUrl === '/upload_chunk' && code === 1) {
+      console.log('请求出错了重新上传')
+      return againRequest(instance, response.config)
+    }
     return response;
   },
   (error) => {
     return Promise.reject(error);
   }
 );
+// 重新发送请求
+function againRequest(axios, config) {
+  if (config.data instanceof FormData) {
+    const retry = +config.data.get('count')
+    const maxCount = +config.data.get('maxCount')
+    const fileName = config.data.get('filename')
+    if (retry >= maxCount) {
+      return Promise.reject({
+        code: 1,
+        fileName,
+        msg: `重新请求次数超过${maxCount}次`
+      })
+    }
+    config.data.set('count', retry + 1)
+  }
+  return axios(config)
+}
 
 export default function request(reqConfig) {
   return new Promise((resolve, reject) => {

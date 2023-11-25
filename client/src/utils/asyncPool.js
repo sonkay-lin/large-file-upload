@@ -25,5 +25,5 @@ export async function asyncPool(limit, array, iteratorFn) {
     }
   }
 
-  return Promise.all(executing);
+  return Promise.all(ret);
 }
